@@ -8,73 +8,145 @@ require_once '../inc/validaciones.inc.php';
 require_once '../clases/Usuario.php';
 ?>
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Formulario de Registro</title>
-        <link type="text/css" rel="stylesheet" href="../css/font-awesome.css" />
+
+        <!-- CSS -->
         <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
         <link href='http://fonts.googleapis.com/css?family=Pathway+Gothic+One' rel='stylesheet' type='text/css' />
+        <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
+		    <link rel="stylesheet" href="../assets/css/form-elements.css">
+        <link rel="stylesheet" href="../assets/css/style.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="../assets/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+
     </head>
+
     <body>
-            
-           <div class='formulario' id='registroNuevo'>
-               <h2>Registro de Usuario</h2>
-               <div id='usuarioOk'>
-                    <?php
-                        if(isset($_REQUEST['error'])){
-                            ?>
-                              <h2>DATOS DEL REGISTRO:</h2>
-                              <?php
-                            $error=  urldecode($_REQUEST['error']);
-                            $errores=  unserialize($error);
-                            foreach ($errores as $key => $value) {
-                                if($value==-301){
-                                  echo '<p style="color:green">'.validacionExisteUsuario($value)."</p>";  
-                                  $usuario=new Usuario();                            
-                                }else{
-                                echo '<p style="color:red">'.($key+1).")".validacionExisteUsuario($value)."</p>";
-                                }
-                            }
-                        }
-                        ?>
-               </div>
-                <form enctype="multipart/form-data" action="grabar_registro_header.php" method="POST" autocomplete="off">
-    		
-                        <p><label class="icon">Nick</label>
-                    <input type="text" name="nick" placeholder="Nick" autofocus="autofocus" required="required"/><span style="color:red">*</span></p>
-                        <p><label class="icon">Nombre</label>
-                    <input type="text" name="nombre" placeholder="Nombre" required="required"/><span style="color:red">*</span></p>
-                        <p><label class="icon">Apellidos</label>    
-                    <input type="text" name="apellidos" placeholder="Apellidos" required="required"/><span style="color:red">*</span></p>
-                        <p><label class="icon">Email</label>
-                    <input type="email" name="mail" placeholder="Email" required="required"/><span style="color:red">*</span></p> 
-                        <p><label class="icon">Teléfono</label>
-                    <input type="text" name="tfno" placeholder="Teléfono" size="9"/></p>          
-                        <p><label class="icon">Contraseña</label>
-                    <input type="password" name="pass" placeholder="Contraseña" required="required"/><span style="color:red">*</span></p>
-                        <p><label class="icon" >Fecha de Nacimiento</label>
-                    <input type="date" name="fecha_nac" /></p>
-                        <p><label class="icon">Añade una foto</label>
-                    <input type="file" name="foto" /><input type="hidden" name="lim_tamano" value="120000"/></p>
-                        <p><label class="icon" class='editor'>¿Quieres ser EDITOR?</label>
-                    <input type="radio" name="editor" value="no" checked="checked"/><label>No</label>
-                    <input type="radio" name="editor" value="si" /><label>Si</label></p>	
-                    <div class='centrado'>
-                        <input type="submit" class='botonFormulario' name="enviar" value="Enviar"/><input type="reset" class='botonFormulario' value="Borrar"/>			
-        		    </div>    
-    	        </form>
-               <div id='errores'>
-                   
-               </div>
+
+        <!-- Top content -->
+        <div class="top-content">
+
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text">
+                            <h1>Formulario de Registro</h1>
+                              <div id='usuarioOk'>
+                                   <?php
+                                       if(isset($_REQUEST['error'])){
+                                           ?>
+                                             <h2>DATOS DEL REGISTRO:</h2>
+                                             <?php
+                                           $error=  urldecode($_REQUEST['error']);
+                                           $errores=  unserialize($error);
+                                           foreach ($errores as $key => $value) {
+                                               if($value==-301){
+                                                 echo '<p style="color:green">'.validacionExisteUsuario($value)."</p>";
+                                                 $usuario=new Usuario();
+                                               }else{
+                                               echo '<p style="color:red">'.($key+1).")".validacionExisteUsuario($value)."</p>";
+                                               }
+                                           }
+                                       }
+                                       ?>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>Regístrate para entrar en nuestro sitio</h3>
+                            		<p>Introduce tus datos:</p>
+                        		</div>
+                        		<div class="form-top-right">
+                        			<i class="fa fa-key"></i>
+                        		</div>
+                            </div>
+                            <div class="form-bottom">
+			                    <form role="form" action="grabar_registro_header.php" method="post" class="login-form">
+			                    	<div class="form-group">
+			                    		<label class="" for="form-username">Nick</label>
+			                        	<input type="text" name="nick" placeholder="Nick..." class="form-username form-control" id="form-username">
+			                      </div>
+                            <div class="form-group">
+			                    		<label class="" for="form-username">Nombre</label>
+			                        	<input type="text" name="nombre" placeholder="Nombre..." class="form-username form-control" id="form-username">
+			                      </div>
+                            <div class="form-group">
+			                    		<label class="" for="form-username">Apellidos</label>
+			                        	<input type="text" name="apellidos" placeholder="Apellidos..." class="form-username form-control" id="form-username">
+			                      </div>
+                            <div class="form-group">
+			                    		<label class="" for="form-username">Email</label>
+			                        	<input type="email" name="mail" placeholder="Email..." class="form-username form-control" id="form-username">
+			                      </div>
+                            <div class="form-group">
+			                    		<label class="" for="form-username">Teléfono</label>
+			                        	<input type="text" name="tfno" placeholder="Teléfono..." class="form-username form-control" id="form-username">
+			                      </div>
+			                      <div class="form-group">
+			                        	<label class="" for="form-password">Contraseña</label>
+			                        	<input type="password" name="pass" placeholder="Contraseña..." class="form-password form-control" id="form-password">
+			                      </div>
+                            <div class="form-group">
+			                    		<label class="" for="form-username">Fecha de nacimiento</label>
+			                        	<input type="date" name="fecha_nac" placeholder="Fecha de nacimiento..." class="form-username form-control" id="form-username">
+			                      </div>
+                            <div class="form-group">
+			                    		<label class="" for="form-username">Foto de perfil</label>
+			                        	<input type="file" name="foto" placeholder="Añade una foto..." class="form-username form-control" id="form-username">
+			                      </div>
+                            <div class="form-group">
+			                    		<label class="" for="form-username">¿Quieres ser editor?</label>
+			                        	<input type="radio" name="editor" value="no" checked="checked"/>No
+                                <input type="radio" name="editor" value="si"/>Si
+                            </div>
+			                        <button type="submit" name='enviar' class="btn">¡Regístrate!</button>
+                              <button type="reset" class='btn'>Borrar</button>
+                              <button type="button" onclick=" location.href='../index.php' " class="btn">Inicio</button>
+			                    </form>
+		                    </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        
-        <div id="inicio" class='centrado'>
-            <h2><a class='enlace' href="../index.php">Volver al inicio</a></h2>
+
         </div>
+
+
+        <!-- Javascript -->
+        <script src="../assets/js/jquery-1.11.1.min.js"></script>
+        <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="../assets/js/jquery.backstretch.min.js"></script>
+        <script src="../assets/js/scripts.js"></script>
+
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
     </body>
+
 </html>
